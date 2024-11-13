@@ -11,7 +11,7 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             const newPost = {
                 id: state.posts.length + 1, // automatically generate a new ID
                 message: state.newPostText,
@@ -24,11 +24,13 @@ const profileReducer = (state = initialState, action) => {
                 posts: [...state.posts, newPost],
                 newPostText: ''
             };
-        case UPDATE_NEW_POST_TEXT:
+        }
+        case UPDATE_NEW_POST_TEXT: {
             return {
                 ...state, //keep the remaining fields unchanged
                 newPostText: action.newText // update only newPostText
             };
+        }
         default: return state;
     }
 
