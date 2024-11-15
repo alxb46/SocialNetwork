@@ -1,45 +1,29 @@
 import React from "react";
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/icon.png";
-import axios from "axios";
 
-class Users extends React.Component {
+let Users = (props) => {
 
-    componentDidMount() {
-        axios.get(`/api/1.0/users?page=${this.props.currentPage}&count=${this.props.count}&pageSize=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-            })
-            .catch(error => console.error(error));
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
 
-    onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber);
-        axios.get(`/api/1.0/users?page=${pageNumber}&count=${this.props.count}&pageSize=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
-            })
-            .catch(error => console.error(error));
-    }
-    render() {
-        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-        let pages = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
-        return (
-            <div>
-                <div>
-                    {pages.map(page => {
-                        return (
-                            <span className={this.props.currentPage === page && styles.selectedPage}
-                            onClick={(e) => {this.onPageChanged(page)}}>{page}</span>
-                        );
-                    })}
-                </div>
-                {
-                    this.props.users.map(user => <div key={user.id} className={styles.userContainer}>
+    return (
+        <div>
+            <div className={styles.pageNumberContainer}>
+                {pages.map(page => {
+                    return (
+                        <span className={props.currentPage === page && styles.selectedPage}
+                              onClick={(e) => {
+                                  props.onPageChanged(page)
+                              }}>{page}</span>
+                    );
+                })}
+            </div>
+            {
+                props.users.map(user => <div key={user.id} className={styles.userContainer}>
                     <span>
                         <div className={styles.userBodyContainer}>
                             <img
@@ -51,30 +35,29 @@ class Users extends React.Component {
                         <div className={styles.userBodyContainer}>
                             {user.followed
                                 ? <button onClick={() => {
-                                    this.props.unfollowUser(user.id)
+                                    props.unfollowUser(user.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    this.props.followUser(user.id)
+                                    props.followUser(user.id)
                                 }}>Follow</button>
                             }
 
                         </div>
                     </span>
-                        <div className={styles.userInfoContainer}>
-                            <div>
-                                <div>{user.name}</div>
-                                <div>{user.status}</div>
-                            </div>
-                            <div>
-                                <div>{'user.location.country'}</div>
-                                <div>{'user.location.city'}</div>
-                            </div>
+                    <div className={styles.userInfoContainer}>
+                        <div>
+                            <div>{user.name}</div>
+                            <div>{user.status}</div>
                         </div>
-                    </div>)
-                }
-            </div>
-        );
-    }
+                        <div>
+                            <div>{'user.location.country'}</div>
+                            <div>{'user.location.city'}</div>
+                        </div>
+                    </div>
+                </div>)
+            }
+        </div>
+    );
 }
 
 export default Users;

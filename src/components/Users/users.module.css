@@ -28,3 +28,11 @@
 .selectedPage{
     font-weight: bold;
 }
+.pageNumberContainer{
+    display: flex;
+    flex-direction: row;
+}
+.pageNumberContainer > span{
+    margin-left: 10px;
+
+}
