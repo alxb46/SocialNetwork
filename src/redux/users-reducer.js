@@ -1,36 +1,14 @@
 const FOLLOW = 'ADD_POST';
 const UNFOLLOW = 'UPDATE_NEW_POST_TEXT';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 let initialState = {
-    users:[
-        /*
-        {
-            id: 1,
-            fullName: 'Alex',
-            status: 'I`m a frontend developer',
-            location: {city:'Odesa', country:'Ukraine'},
-            followed: false,
-            imgUrl: 'https://static.stacker.com/s3fs-public/styles/slide_desktop/s3/02LD0JTY.png'
-        },
-        {
-            id: 2,
-            fullName: 'Dmitriy',
-            status: 'I`m a backend developer',
-            location: {city:'LA', country:'USA'},
-            followed: true,
-            imgUrl: 'https://castingfrontier.com/wp-content/uploads/2021/03/shutterstock_1439469431-scaled.jpg'
-        },
-        {
-            id: 3,
-            fullName: 'Roman',
-            status: 'I`m a QA',
-            location: {city:'London', country:'GB'},
-            followed: false,
-            imgUrl: 'https://static.stacker.com/s3fs-public/styles/sar_screen_maximum_large/s3/2024-09/tom-hanks-favorite-actors_0.jpg'
-        },
-        */
-    ]
+    users:[],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 2,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -60,6 +38,17 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: action.users
             }
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                // totalUsersCount: action.count
+                totalUsersCount: 30
+            }
         default: return state;
     }
 
@@ -78,5 +67,13 @@ export const setUsersAC = (users) => ({
     type: SET_USERS,
     users
 });
-
+export const setCurrentPageAC = (currentPage) => ({
+    type: SET_CURRENT_PAGE,
+    currentPage: currentPage,
+});
+//setUsersTotalCountAC
+export const setUsersTotalCountAC = (totalUsersCount) => ({
+    type: SET_TOTAL_USERS_COUNT,
+    count: totalUsersCount,
+});
 export default usersReducer;

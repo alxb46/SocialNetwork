@@ -1,74 +1,80 @@
 import React from "react";
 import styles from "./users.module.css";
+import userPhoto from "../../assets/images/icon.png";
+import axios from "axios";
 
-let Users = (props) => {
+class Users extends React.Component {
 
-    if (props.users.length === 0) {
-        props.setUsers( [
-                {
-                    id: 1,
-                    fullName: 'Alex',
-                    status: 'I`m a frontend developer',
-                    location: {city:'Odesa', country:'Ukraine'},
-                    followed: false,
-                    imgUrl: 'https://static.stacker.com/s3fs-public/styles/slide_desktop/s3/02LD0JTY.png'
-                },
-                {
-                    id: 2,
-                    fullName: 'Dmitriy',
-                    status: 'I`m a backend developer',
-                    location: {city:'LA', country:'USA'},
-                    followed: true,
-                    imgUrl: 'https://castingfrontier.com/wp-content/uploads/2021/03/shutterstock_1439469431-scaled.jpg'
-                },
-                {
-                    id: 3,
-                    fullName: 'Roman',
-                    status: 'I`m a QA',
-                    location: {city:'London', country:'GB'},
-                    followed: false,
-                    imgUrl: 'https://static.stacker.com/s3fs-public/styles/sar_screen_maximum_large/s3/2024-09/tom-hanks-favorite-actors_0.jpg'
-                },
-            ]
-        );
+    componentDidMount() {
+        axios.get(`/api/1.0/users?page=${this.props.currentPage}&count=${this.props.count}&pageSize=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setTotalUsersCount(response.data.totalCount);
+            })
+            .catch(error => console.error(error));
     }
 
-
-    return (
-        <div>
-            {
-                props.users.map(user => <div key={user.id}>
+    onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`/api/1.0/users?page=${pageNumber}&count=${this.props.count}&pageSize=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+            })
+            .catch(error => console.error(error));
+    }
+    render() {
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+        let pages = [];
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i);
+        }
+        return (
+            <div>
+                <div>
+                    {pages.map(page => {
+                        return (
+                            <span className={this.props.currentPage === page && styles.selectedPage}
+                            onClick={(e) => {this.onPageChanged(page)}}>{page}</span>
+                        );
+                    })}
+                </div>
+                {
+                    this.props.users.map(user => <div key={user.id} className={styles.userContainer}>
                     <span>
-                        <div>
+                        <div className={styles.userBodyContainer}>
                             <img
                                 className={styles.userPhoto}
-                                src={user.imgUrl}
+                                src={user.photos.small != null ? user.photos.small : userPhoto}
                                 alt="user-image"
                             />
                         </div>
-                        <div>
+                        <div className={styles.userBodyContainer}>
                             {user.followed
-                                ? <button onClick={() => {props.unfollowUser(user.id)}}>Unfollow</button>
-                                : <button onClick={() => {props.followUser(user.id)}}>Follow</button>
+                                ? <button onClick={() => {
+                                    this.props.unfollowUser(user.id)
+                                }}>Unfollow</button>
+                                : <button onClick={() => {
+                                    this.props.followUser(user.id)
+                                }}>Follow</button>
                             }
 
                         </div>
                     </span>
-                    <span>
-                        <span>
-                            <div>{user.fullName}</div>
-                            <div>{user.status}</div>
-                        </span>
-                        <span>
-                            <div>{user.location.country}</div>
-                            <div>{user.location.city}</div>
-
-                        </span>
-                    </span>
-                </div>)
-            }
-        </div>
-    );
-};
+                        <div className={styles.userInfoContainer}>
+                            <div>
+                                <div>{user.name}</div>
+                                <div>{user.status}</div>
+                            </div>
+                            <div>
+                                <div>{'user.location.country'}</div>
+                                <div>{'user.location.city'}</div>
+                            </div>
+                        </div>
+                    </div>)
+                }
+            </div>
+        );
+    }
+}
 
 export default Users;

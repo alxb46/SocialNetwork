@@ -4,7 +4,8 @@
 }
 
 .item{
-
+    border: 1px solid black;
+    padding: 16px;
 }
 .item a{
     text-decoration: none;

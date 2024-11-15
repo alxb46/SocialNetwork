@@ -12,13 +12,16 @@ const Navbar = () => {
                 <Link to="/dialogs">Messages</Link>
             </div>
             <div className={style.item}>
+                <Link to="/users">Users</Link>
+            </div>
+            <div className={style.item}>
                 <Link to="/news">News</Link>
             </div>
             <div className={style.item}>
-                <Link to={'music'}>Music</Link>
+                <Link to={'/music'}>Music</Link>
             </div>
             <div className={style.item}>
-                <Link to={'settings'}>Settings</Link>
+                <Link to={'/settings'}>Settings</Link>
             </div>
         </nav>
     );

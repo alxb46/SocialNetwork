@@ -4,3 +4,27 @@
     border-radius: 50%;
     border: 3px solid white;
 }
+
+.userContainer{
+    padding: 20px;
+    display: flex;
+    border: 1px solid black;
+}
+.userBodyContainer{
+    text-align: center;
+    width: 120px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+.userInfoContainer{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    padding-left: 10px;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.selectedPage{
+    font-weight: bold;
+}
