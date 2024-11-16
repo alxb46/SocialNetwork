@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/icon.png";
+import {Link} from "react-router-dom";
 
 let Users = (props) => {
 
@@ -26,11 +27,14 @@ let Users = (props) => {
                 props.users.map(user => <div key={user.id} className={styles.userContainer}>
                     <span>
                         <div className={styles.userBodyContainer}>
-                            <img
-                                className={styles.userPhoto}
-                                src={user.photos.small != null ? user.photos.small : userPhoto}
-                                alt="user-image"
-                            />
+                            <Link to={'/profile' + user.id}>
+                                <img
+                                    className={styles.userPhoto}
+                                    src={user.photos.small != null ? user.photos.small : userPhoto}
+                                    alt="user-image"
+                                />
+                            </Link>
+                            
                         </div>
                         <div className={styles.userBodyContainer}>
                             {user.followed
