@@ -27,7 +27,7 @@ let Users = (props) => {
                 props.users.map(user => <div key={user.id} className={styles.userContainer}>
                     <span>
                         <div className={styles.userBodyContainer}>
-                            <Link to={'/profile' + user.id}>
+                            <Link to={'/profile/' + user.id}>
                                 <img
                                     className={styles.userPhoto}
                                     src={user.photos.small != null ? user.photos.small : userPhoto}
