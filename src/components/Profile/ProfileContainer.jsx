@@ -7,13 +7,13 @@ import {useParams} from "react-router-dom";
 
 class ProfileContainer extends React.Component {
 
-    async componentDidMount() {
+     componentDidMount() {
         let userId = this.props.userId;
         console.log(userId);
         if (!userId){
             userId = 2;
         }
-        await axios.get(`/api/1.0/profile/` + userId)
+         axios.get(`/api/1.0/profile/` + userId)
             .then(response => {
                 this.props.setUserProfile(response.data);
             })
@@ -34,8 +34,7 @@ let mapStateToProps = (state) => ({
 
 const ProfileContainerUrl = (props) => {
 
-    const userId = useParams().userId;  //
-    debugger;
+    const userId = useParams().userId;
     return <ProfileContainer {...props} userId={userId} />;};
 
 export default connect(mapStateToProps, {setUserProfile}) (ProfileContainerUrl);

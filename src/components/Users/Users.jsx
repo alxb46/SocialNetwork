@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/icon.png";
 import {Link} from "react-router-dom";
+import axios from "axios";
 
 let Users = (props) => {
 
@@ -39,10 +40,32 @@ let Users = (props) => {
                         <div className={styles.userBodyContainer}>
                             {user.followed
                                 ? <button onClick={() => {
-                                    props.unfollowUser(user.id)
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": "5ae46dee-bde3-4f59-bcb7-42ce831bc0cb"
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                props.unfollowUser(user.id);
+                                            }
+                                        })
+                                        .catch(error => console.error(error));
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.followUser(user.id)
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": "5ae46dee-bde3-4f59-bcb7-42ce831bc0cb"
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                props.followUser(user.id);
+                                            }
+                                        })
+                                        .catch(error => console.error(error));
                                 }}>Follow</button>
                             }
 
