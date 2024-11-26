@@ -12,7 +12,6 @@ const Header = (props) => {
                 {props.isAuthenticated ? props.login
                     : <Link to={'/login'}>Login</Link>
                 }
-
             </div>
         </header>
     );

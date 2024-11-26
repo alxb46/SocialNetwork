@@ -1,4 +1,4 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import profileReducer from "./profile-reducer";
@@ -11,9 +11,12 @@ let reducers = combineReducers({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
-})
+});
 
-let store = configureStore({reducer: reducers});
+let store = configureStore({
+    reducer: reducers,
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware(), // по умолчанию redux-thunk включен
+});
 
 window.store = store;
 

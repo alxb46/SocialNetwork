@@ -1,9 +1,9 @@
 import React from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/profile-reducer";
 import {useParams} from "react-router-dom";
+import {profileApi} from "../../api/api";
 
 class ProfileContainer extends React.Component {
 
@@ -13,11 +13,8 @@ class ProfileContainer extends React.Component {
         if (!userId){
             userId = 2;
         }
-         axios.get(`/api/1.0/profile/` + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            })
-            .catch(error => console.error(error));
+
+        profileApi.getProfile(this.props.setUserProfile, userId);
     }
 
     render() {
