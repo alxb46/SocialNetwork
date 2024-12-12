@@ -27,30 +27,21 @@ export const usersApi = {
 }
 
 export const profileApi = {
-    getProfile(setUserProfile, userId){
-        return instance.get(`profile/` + userId)
-            .then(response => {
-                setUserProfile(response.data);
-            })
-            .catch(error => console.error(error));
+    getProfile(userId){
+        return instance.get(`profile/` + userId);
+    },
+    getStatus(userId){
+        //debugger;
+        return instance.get(`profile/status/${userId}`);
+    },
+    updateStatus(status){
+        debugger;
+        return instance.put(`profile/status`, {status: status});
     }
 }
 
 export const authApi = {
-    getAuth(setAuthUserData) {
-        return (
-            instance.get('auth/me')
-                .then(response => {
-                    if (response.data.resultCode === 0) {
-                        let {id, email, login} = response.data.data;
-                        setAuthUserData(id, email, login);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                })
-    )
-        ;
-
+    getAuth() {
+        return (instance.get('auth/me'));
     }
 }
