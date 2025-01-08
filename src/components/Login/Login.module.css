@@ -1,0 +1,44 @@
+.loginContainer{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+
+}
+
+.imgContainer{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+.imgBackground{
+    max-width: 90%;
+    height: 50vw;
+    display: block;
+}
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    padding: 20px;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+    box-shadow: 10px 5px 5px #c1c1c1;
+}
+
+h1 {
+    font-size: 2em;
+    border-bottom: 1px solid rgb(248, 248, 248);
+    margin-bottom: 25px;
+    color: #4a4a4a;
+}

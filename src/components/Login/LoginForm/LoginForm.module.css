@@ -1,0 +1,40 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.field{
+    width: 97%;
+    height: 40px;
+    padding-left: 2%;
+    border-radius: 5px;
+    border: 1px solid #c1c1c1;
+}
+
+.label{
+    display: block;
+    margin: 10px 0;
+    color:#363636;
+    font-weight: 700;
+}
+
+.errorMessage{
+    color: #f14668;
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.checkbox{
+    margin: 15px 0;
+
+}
+
+.button{
+    height: 40px;
+    background: cornflowerblue;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+}
